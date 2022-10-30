@@ -103,6 +103,9 @@ namespace NoMansCity
             {
                 bitmaps.Add((Bitmap)img);
             }
+            Bitmap newBitmap = new Bitmap(images[0]);
+            pictureBox5.Image= newBitmap;
+            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             //bitmaps.
         }
     }
