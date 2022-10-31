@@ -106,7 +106,13 @@ namespace NoMansCity
             Bitmap newBitmap = new Bitmap(images[0]);
             pictureBox5.Image= newBitmap;
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            //bitmaps.
+            for(int i = 10; i < bitmaps[0].Height; i++)
+            {
+                for (int j = 10; j< bitmaps[0].Width; j++)
+                {
+
+                }
+            }
         }
     }
 }
