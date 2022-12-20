@@ -99,8 +99,9 @@
             // jpegToolStripMenuItem
             // 
             this.jpegToolStripMenuItem.Name = "jpegToolStripMenuItem";
-            this.jpegToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.jpegToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.jpegToolStripMenuItem.Text = "Jpeg";
+            this.jpegToolStripMenuItem.Click += new System.EventHandler(this.jpegToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 

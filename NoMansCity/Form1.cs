@@ -15,6 +15,7 @@ namespace NoMansCity
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            images = new List<Image>();
             int height=0, width=0;
             pictureBox1.Image = null;
             pictureBox2.Image = null;
@@ -34,6 +35,7 @@ namespace NoMansCity
                 {
                     try
                     {
+                        
                         Image loadedImage = Image.FromFile(dialog.FileNames[i]);
                         images.Add(loadedImage);
                         switch (i)
@@ -99,20 +101,39 @@ namespace NoMansCity
                 return;
             }
             List<Bitmap> bitmaps = new List<Bitmap>();
-            foreach(var img in images)
+            foreach (var img in images)
             {
                 bitmaps.Add((Bitmap)img);
             }
             Bitmap newBitmap = new Bitmap(images[0]);
-            pictureBox5.Image= newBitmap;
+            pictureBox5.Image = newBitmap;
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-            for(int i = 10; i < bitmaps[0].Height; i++)
+
+            for (int i = 0; i < bitmaps[0].Height; i++) //y
             {
-                for (int j = 10; j< bitmaps[0].Width; j++)
+                for (int j = 0; j < bitmaps[0].Width; j++) //x
                 {
+                    List<Color> colors = new List<Color>();
+                    for (int b = 0; b < bitmaps.Count; b++)
+                    {
+                        colors.Add(bitmaps[b].GetPixel(j, i));    
+                    }
+                    newBitmap.SetPixel(j, i, choosePixel(colors));
 
                 }
             }
+        }
+
+        private Color choosePixel(List<Color> colors)
+        {
+            var most = colors.GroupBy(c => new {c.R, c.G, c.B}).OrderByDescending(grp => grp.Count())
+      .Select(grp => grp.Key).First();
+            return Color.FromArgb(most.R, most.G, most.B);
+        }
+
+        private void jpegToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
