@@ -1,3 +1,6 @@
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using System.Security;
 using System.Text;
 using System.Windows.Forms;
@@ -108,7 +111,8 @@ namespace NoMansCity
             Bitmap newBitmap = new Bitmap(images[0]);
             pictureBox5.Image = newBitmap;
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
-
+            progressBar1.Maximum = bitmaps[0].Height;
+            progressBar1.Minimum = 0;
             for (int i = 0; i < bitmaps[0].Height; i++) //y
             {
                 for (int j = 0; j < bitmaps[0].Width; j++) //x
@@ -121,19 +125,104 @@ namespace NoMansCity
                     newBitmap.SetPixel(j, i, choosePixel(colors));
 
                 }
+                progressBar1.Value = i;
             }
+            MessageBox.Show("Success");
         }
 
-        private Color choosePixel(List<Color> colors)
+        private Color choosePixel(List<Color> colors) //Easy algorithm
         {
-            var most = colors.GroupBy(c => new {c.R, c.G, c.B}).OrderByDescending(grp => grp.Count())
-      .Select(grp => grp.Key).First();
+            var gr = colors.GroupBy(c => new { c.R, c.G, c.B });
+            var most = gr.OrderByDescending(grp => grp.Count())
+                .Select(grp => grp.Key).First();
             return Color.FromArgb(most.R, most.G, most.B);
         }
 
+        private Color GetAvereagePixel(List<Color> colors)
+        {
+            var Rl = colors.Select(c => c.R).ToList();
+            byte R;
+            int Rsum=0;
+            foreach(var p in Rl)
+            {
+                Rsum += p;
+            }
+            R = (byte)(Rsum / colors.Count);
+
+            var Gl = colors.Select(c => c.G).ToList();
+            byte G;
+            int Gsum = 0;
+            foreach (var p in Gl)
+            {
+                Gsum += p;
+            }
+            G = (byte)(Gsum / colors.Count);
+
+            var Bl = colors.Select(c => c.B).ToList();
+            byte B;
+            int Bsum = 0;
+            foreach (var p in Bl)
+            {
+                Bsum += p;
+            }
+            B = (byte)(Bsum / colors.Count);
+
+            return Color.FromArgb(R, G, B);
+        }
+
+        
+
         private void jpegToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //string dummyFileName = "NewPicture.jpeg";
 
+            //SaveFileDialog sf = new SaveFileDialog();
+            //// Feed the dummy name to the save dialog
+            //sf.FileName = dummyFileName;
+
+            //if (sf.ShowDialog() == DialogResult.OK)
+            //{
+            //    // Now here's our save folder
+            //    string savePath = Path.GetDirectoryName(sf.FileName);
+            //    // Do whatever
+
+            //}
+            pictureBox5.Image.Save(@"rendered.jpg", ImageFormat.Jpeg);
+            MessageBox.Show("Success");
+        }
+
+        private void TimeMachineBtn_Click(object sender, EventArgs e)
+        {
+            if (images.Count < 2)
+            {
+                MessageBox.Show("You must load more than 2 pictures", "Amount error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            List<Bitmap> bitmaps = new List<Bitmap>();
+            foreach (var img in images)
+            {
+                bitmaps.Add((Bitmap)img);
+            }
+            Bitmap newBitmap = new Bitmap(images[0]);
+            pictureBox5.Image = newBitmap;
+            pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
+            progressBar1.Maximum = bitmaps[0].Height;
+            progressBar1.Minimum = 0;
+            for (int i = 0; i < bitmaps[0].Height; i++) //y
+            {
+                for (int j = 0; j < bitmaps[0].Width; j++) //x
+                {
+                    List<Color> colors = new List<Color>();
+                    for (int b = 0; b < bitmaps.Count; b++)
+                    {
+                        colors.Add(bitmaps[b].GetPixel(j, i));
+                    }
+                    newBitmap.SetPixel(j, i, GetAvereagePixel(colors));
+
+                }
+                progressBar1.Value = i;
+            }
+            MessageBox.Show("Success");
         }
     }
 }

@@ -44,6 +44,7 @@
             this.TimeMachineBtn = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -60,7 +61,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1043, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1037, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -77,14 +78,14 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.closeToolStripMenuItem.Text = "Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -93,13 +94,13 @@
             this.saveAsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.jpegToolStripMenuItem});
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.saveAsToolStripMenuItem.Text = "Save as";
             // 
             // jpegToolStripMenuItem
             // 
             this.jpegToolStripMenuItem.Name = "jpegToolStripMenuItem";
-            this.jpegToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.jpegToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.jpegToolStripMenuItem.Text = "Jpeg";
             this.jpegToolStripMenuItem.Click += new System.EventHandler(this.jpegToolStripMenuItem_Click);
             // 
@@ -183,12 +184,13 @@
             this.TimeMachineBtn.TabIndex = 8;
             this.TimeMachineBtn.Text = "Time Machine";
             this.TimeMachineBtn.UseVisualStyleBackColor = false;
+            this.TimeMachineBtn.Click += new System.EventHandler(this.TimeMachineBtn_Click);
             // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(232, 390);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(799, 75);
+            this.richTextBox1.Size = new System.Drawing.Size(789, 75);
             this.richTextBox1.TabIndex = 9;
             this.richTextBox1.Text = "";
             // 
@@ -201,12 +203,20 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Status:";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(12, 486);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1009, 23);
+            this.progressBar1.TabIndex = 11;
+            // 
             // NoManCityForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Desktop;
-            this.ClientSize = new System.Drawing.Size(1043, 488);
+            this.ClientSize = new System.Drawing.Size(1037, 521);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.TimeMachineBtn);
@@ -248,5 +258,6 @@
         private Button TimeMachineBtn;
         private RichTextBox richTextBox1;
         private Label label1;
+        private ProgressBar progressBar1;
     }
 }
