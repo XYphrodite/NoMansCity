@@ -122,7 +122,7 @@ namespace NoMansCity
                     {
                         colors.Add(bitmaps[b].GetPixel(j, i));    
                     }
-                    newBitmap.SetPixel(j, i, choosePixel(colors));
+                    newBitmap.SetPixel(j, i, choosePixel2(colors));
 
                 }
                 progressBar1.Value = i;
@@ -133,8 +133,55 @@ namespace NoMansCity
         private Color choosePixel(List<Color> colors) //Easy algorithm
         {
             var gr = colors.GroupBy(c => new { c.R, c.G, c.B });
-            var most = gr.OrderByDescending(grp => grp.Count())
-                .Select(grp => grp.Key).First();
+            var ord = gr.OrderByDescending(grp => grp.Count());
+            var most = ord.Select(grp => grp.Key).First();
+            return Color.FromArgb(most.R, most.G, most.B);
+        }
+
+        private Color choosePixel2(List<Color> colors) //More difficult algorithm
+        {
+            List<MyRGB> myList = new List<MyRGB>();
+            for (int i = 0; i < colors.Count; i++)
+            {
+                if (myList.Count == 0)
+                {
+                    myList.Add(new MyRGB
+                    {
+                        R = colors[i].R,
+                        G = colors[i].G,
+                        B = colors[i].B,
+                        A=1
+                    });
+                    continue;
+                }
+                bool eq = false;
+                foreach (var l in myList)
+                {
+                    if (l.Equals(new MyRGB
+                    {
+                        R = colors[i].R,
+                        G = colors[i].G,
+                        B = colors[i].B
+                    },5))
+                    {
+                        l.A++;
+                        eq = true;
+                    }
+                }
+                if (!eq)
+                {
+                    myList.Add(new MyRGB
+                    {
+                        R = colors[i].R,
+                        G = colors[i].G,
+                        B = colors[i].B,
+                        A = 1
+                    });
+                }
+            }
+
+            var most = myList.OrderByDescending(m => m.A).First();
+
             return Color.FromArgb(most.R, most.G, most.B);
         }
 
@@ -174,19 +221,6 @@ namespace NoMansCity
 
         private void jpegToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //string dummyFileName = "NewPicture.jpeg";
-
-            //SaveFileDialog sf = new SaveFileDialog();
-            //// Feed the dummy name to the save dialog
-            //sf.FileName = dummyFileName;
-
-            //if (sf.ShowDialog() == DialogResult.OK)
-            //{
-            //    // Now here's our save folder
-            //    string savePath = Path.GetDirectoryName(sf.FileName);
-            //    // Do whatever
-
-            //}
             pictureBox5.Image.Save(@"rendered.jpg", ImageFormat.Jpeg);
             MessageBox.Show("Success");
         }
@@ -223,6 +257,64 @@ namespace NoMansCity
                 progressBar1.Value = i;
             }
             MessageBox.Show("Success");
+        }
+    }
+
+    class MyRGB
+    {
+        public byte R, G, B, A;
+        public bool Equals(MyRGB obj, int e)
+        {
+            if (obj is MyRGB)
+            {
+                bool req = false;
+                bool geq = false;
+                bool beq = false;
+
+
+                for(int i = 0; i < e; i++)
+                {
+                    if (obj.R == this.R+i)
+                        req = true;
+                    if (obj.G == this.G+i)
+                        geq = true;
+                    if (obj.B == this.B+i)
+                        beq = true;
+                }
+
+                for (int i = 0; i < e; i++)
+                {
+                    if (obj.R == this.R - i)
+                        req = true;
+                    if (obj.G == this.G - i)
+                        geq = true;
+                    if (obj.B == this.B - i)
+                        beq = true;
+                }
+
+                if (req && beq && geq)
+                    return true;
+                //if ((obj.R == this.R
+                //    || obj.R == this.R + 1
+                //    || obj.R == this.R + 2
+                //    || obj.R == this.R - 1
+                //    || obj.R == this.R - 2)
+                //    && (obj.G == this.G
+                //    || obj.G == this.G - 2
+                //    || obj.G == this.G - 1
+                //    || obj.G == this.G + 1
+                //    || obj.G == this.G + 2)
+                //    && (obj.B == this.B + 2
+                //    || obj.B == this.B + 1
+                //    || obj.B == this.B
+                //    || obj.B == this.B - 1
+                //    || obj.B == this.B - 2))
+                //{
+                //    return true;
+                //}
+                return false;
+            }
+            return false;
         }
     }
 }
