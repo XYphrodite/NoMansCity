@@ -294,24 +294,6 @@ namespace NoMansCity
 
                 if (req && beq && geq)
                     return true;
-                //if ((obj.R == this.R
-                //    || obj.R == this.R + 1
-                //    || obj.R == this.R + 2
-                //    || obj.R == this.R - 1
-                //    || obj.R == this.R - 2)
-                //    && (obj.G == this.G
-                //    || obj.G == this.G - 2
-                //    || obj.G == this.G - 1
-                //    || obj.G == this.G + 1
-                //    || obj.G == this.G + 2)
-                //    && (obj.B == this.B + 2
-                //    || obj.B == this.B + 1
-                //    || obj.B == this.B
-                //    || obj.B == this.B - 1
-                //    || obj.B == this.B - 2))
-                //{
-                //    return true;
-                //}
                 return false;
             }
             return false;
